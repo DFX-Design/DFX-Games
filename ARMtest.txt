@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 A line of text. Save it and close it.
+=======
+ARM: This is the line of text I added.
+>>>>>>> ec8f41b103754e51da5d6a55b50efda6311cbee3
