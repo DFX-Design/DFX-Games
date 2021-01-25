@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public float walkSpeed = 5.5f;
     public float jumpHeight = 5.5f;
     public float railSpeed = 30f;
+    public float railExitSpeed = 50f;
 
     //Objects used to check player is grounded.
     public Transform groundCheckTransform;
@@ -223,34 +224,31 @@ public class Player : MonoBehaviour
                 //rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, 0);
                 //rigidBody.AddForce(Vector3.MoveTowards(rigidBody.position, railEndPoint.position , railSpeed * Time.deltaTime), ForceMode.VelocityChange);
                 rigidBody.isKinematic = true;
-            }
-
-            else
-
-
-                rigidBody.isKinematic = false;
 
                 if (railJumpKeyWasPressed)
                 {
                     //animator.SetTrigger("takeOff");
                     //animator.SetBool("isJumping", true);
                     isRailRiding = false;
+                    railRideKeyWasPressed = false;
                     rigidBody.isKinematic = false;
                     rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, 0);
-                    rigidBody.AddForce(Vector3.up * Mathf.Sqrt(jumpHeight  * 3 * -1 * Physics.gravity.y), ForceMode.VelocityChange);
+                    rigidBody.AddForce(Vector3.up * Mathf.Sqrt(jumpHeight * 3 * -1 * Physics.gravity.y), ForceMode.VelocityChange);
+                    rigidBody.AddRelativeForce(Vector3.forward * railExitSpeed);
+                    railJumpKeyWasPressed = false;
 
 
-                    
                 }
-            railJumpKeyWasPressed = false;
 
 
-            if (railRideKeyWasReleased)
+
+                if (railRideKeyWasReleased)
                 {
                     railRideKeyWasPressed = false;
                     rigidBody.isKinematic = false;
                     isRailRiding = false;
-
+                    rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, 0);
+                    rigidBody.AddRelativeForce(Vector3.forward * railExitSpeed);
 
                     // if (rigidBody.velocity <= 1f)
                     // {
@@ -262,11 +260,24 @@ public class Player : MonoBehaviour
 
                 if (railEndReached)
                 {
-                    railRideKeyWasPressed = false;
                     rigidBody.isKinematic = false;
+                    railRideKeyWasPressed = false;
                     isRailRiding = false;
+                    railJumpKeyWasPressed = true;
+                    rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, 0);
+                    rigidBody.AddRelativeForce(Vector3.forward * railExitSpeed);
+
 
                 }
+                else
+
+
+                    rigidBody.isKinematic = false;
+            }
+
+            
+
+              
             
 
             

@@ -14,6 +14,7 @@ public class Rails : MonoBehaviour
     private float playerCheckRadius = .5f;
     private bool railRideKeyWasPressed;
     private bool endPointReached;
+    private bool jumpKeyWasPressed;
 
     void Start()
     {
@@ -35,6 +36,12 @@ public class Rails : MonoBehaviour
         {
             railRideKeyWasPressed = false;
          }
+
+       if (Input.GetKeyDown (KeyCode.Space))
+        {
+            railRideKeyWasPressed = false;
+
+        }
       
 
         
